@@ -1,0 +1,37 @@
+def fib_max(max_num):
+    fib_list = [0, 1]
+    current_fib = fib_list[-1]
+    while (current_fib < max_num):
+        fib_list += [fib_list[-2] + fib_list[-1]]
+        current_fib = fib_list[-1]
+    return fib_list
+
+class FibIterator:
+    def __init__(self, n):
+        self.n = n - 1
+        self.count = 0
+        self.fib_list = [0, 1]
+
+    def __next__(self):
+        if self.count == 0 or self.count == 1:
+            self.count += 1
+            return self.fib_list[self.count - 1]
+        elif self.count <= self.n:
+            self.fib_list += [self.fib_list[-2] + self.fib_list[-1]]
+            self.count += 1
+            return self.fib_list[-1]
+        else:
+            raise StopIteration
+
+
+if __name__ == '__main__':
+    # 2.1
+    print(fib_max(4321))
+    
+    # 2.2
+    num = 21
+    iterator_init = FibIterator(num)
+    list = []
+    for i in range(num):
+        list += [next(iterator_init)]
+    print(list)
